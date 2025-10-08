@@ -47,7 +47,8 @@
             width: 100%;
             height: 100%;
             z-index: -1;
-            background: linear-gradient(45deg, #0a0a0a, #1a1a2e, #16213e);
+            /* background: linear-gradient(270deg, #0a0a0a, #1a1a1a, #0a0a0a); */
+            background-color: #000;
             background-size: 400% 400%;
             animation: gradientShift 15s ease infinite;
         }
@@ -238,17 +239,17 @@
 
         .hero-image-frame {
             position: relative;
-            width: 400px;
-            height: 400px;
+            width: 367px;
+            height: 371px;
             border-radius: 50%;
-            padding: 8px;
+            padding: 5px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
             box-shadow: 0 0 60px rgba(102, 126, 234, 0.6);
         }
 
         .hero-image-inner {
-            width: 100%;
-            height: 100%;
+            width: 358px;
+            height: 361px;
             border-radius: 50%;
             background: #0a0a0a;
             padding: 20px;
@@ -413,8 +414,8 @@
             width: 50px;
             height: 50px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-            display: flex;
+            background:rgb(11 163 195 / 40%);
+            display:flex;
             align-items: center;
             justify-content: center;
             color: #fff;
@@ -817,33 +818,84 @@
             box-shadow: 0 20px 60px rgba(102, 126, 234, 0.4);
         }
 
-        .project-image {
-            width: 100%;
-            height: 250px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 72px;
-            color: rgba(255, 255, 255, 0.3);
-            position: relative;
-            overflow: hidden;
-        }
+.project-image {
+    width: 100%;
+    height: 190px;
+    position: relative;
+    overflow: hidden;
+}
 
-        .project-image::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.3);
-            transition: opacity 0.3s;
-        }
+.project-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
 
-        .project-card:hover .project-image::after {
-            opacity: 0;
-        }
+.project-image::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: opacity 0.3s;
+    z-index: 1;
+}
+
+.project-card:hover .project-image::after {
+    opacity: 0;
+}
+.gallery-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+.image-gallery {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 10px 40px; /* space for buttons */
+}
+
+.image-gallery img {
+    height: 200px;
+    width: auto;
+    border-radius: 5px;
+    flex-shrink: 0;
+    cursor: pointer;
+}
+
+/* Navigation buttons */
+.nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: none;
+    color: white;
+    font-size: 32px;
+    padding: 8px 14px;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+.nav.left {
+    left: 10px;
+}
+
+.nav.right {
+    right: 10px;
+}
+
+.nav:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+
 
         .project-content {
             padding: 30px;
@@ -1143,7 +1195,7 @@
                 <div class="hero-image-frame">
                     <div class="hero-image-inner">
                         <div class="hero-image">
-                        <img src="assets/images/mohan-image.jpg" alt="Hero Image" width="320" height="320" style="border-radius: 50%; object-fit: cover;">
+                        <img src="assets/images/mohan-img.jpg" alt="Hero Image" width="320" height="320" style="border-radius: 50%; object-fit: contain;">
                         </div>
                     </div>
                 </div>
@@ -1391,14 +1443,35 @@
             </div>
         </div>
     </section>
+    <script>
+    const gallery = document.getElementById('imageGallery');
+    const nextBtn = document.getElementById('nextBtn');
+    const prevBtn = document.getElementById('prevBtn');
+
+    const scrollAmount = 300; // Adjust scroll distance per click
+
+    nextBtn.addEventListener('click', () => {
+        gallery.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    });
+
+    prevBtn.addEventListener('click', () => {
+        gallery.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+    });
+</script>
+
 
     <!-- Projects Section -->
     <section id="projects">
         <h2 class="section-title scroll-fade">Featured Projects</h2>
         <div class="projects-grid">
             <div class="project-card scroll-fade">
-                <div class="project-image">
-                    <i class="fas fa-car"></i>
+                <div class="gallery-container">
+                    <div class="image-gallery" id="imageGallery">
+                        <img src="assets/images/wedrive.jpg" alt="Image 1">
+                        <img src="assets/images/wedrive2.jpg" alt="Image 2">
+                        <img src="assets/images/wedrive3.jpg" alt="Image 3">
+                        <!-- Add as many as you need -->
+                    </div>
                 </div>
                 <div class="project-content">
                     <h3 class="project-title">WeDriveGlobal</h3>
@@ -1417,8 +1490,13 @@
             </div>
 
             <div class="project-card scroll-fade">
-                <div class="project-image">
-                    <i class="fas fa-graduation-cap"></i>
+                <div class="gallery-container">
+                    <div class="image-gallery" id="imageGallery">
+                        <img src="assets/images/premiere-agile.jpg" alt="Image 1">
+                        <img src="assets/images/premiere-agile2.jpg" alt="Image 2">
+                        <img src="assets/images/premiere-agile3.jpg" alt="Image 3">
+                        <!-- Add as many as you need -->
+                    </div>
                 </div>
                 <div class="project-content">
                     <h3 class="project-title">Premier Agile</h3>
@@ -1436,8 +1514,13 @@
             </div>
 
             <div class="project-card scroll-fade">
-                <div class="project-image">
-                    <i class="fas fa-globe"></i>
+                <div class="gallery-container">
+                    <div class="image-gallery" id="imageGallery">
+                        <img src="assets/images/AA.jpg" alt="Image 1">
+                        <img src="assets/images/AA2.jpg" alt="Image 2">
+                        <img src="assets/images/AA3.jpg" alt="Image 3">
+                        <!-- Add as many as you need -->
+                    </div>
                 </div>
                 <div class="project-content">
                     <h3 class="project-title">Advance Agility</h3>
@@ -1683,4 +1766,3 @@
     </script>
 </body>
 </html>
-
